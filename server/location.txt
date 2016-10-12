@@ -1,0 +1,1 @@
+http://bab-laboratory.com/TrackYourWay/updateLocation.php?mail=bastienchapellier@gmail.com&latitude=45.784509&longitude=4.869741
