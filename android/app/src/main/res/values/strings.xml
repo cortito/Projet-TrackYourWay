@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">TrackYourWay</string>
+    <string name="app_name">Track Your Way</string>
+    <string name="title">Track Your Way</string>
+    <string name="userBtn">Runner</string>
+    <string name="viewerBtn">Viewer</string>
+
 </resources>
