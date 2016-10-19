@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.trackyourway">
 
-
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -20,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RunnerActivity" />
-        <activity android:name=".ViewerActivity"></activity>
+        <activity android:name=".ViewerActivity" />
+        <activity android:name=".RunningActivity"></activity>
     </application>
 
 </manifest>

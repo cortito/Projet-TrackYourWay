@@ -5,5 +5,9 @@
     <string name="viewerBtn">Viewer</string>
     <string name="titleRunner">Welcome Runner</string>
     <string name="startBtn">Start Running</string>
+    <string name="runTitle">The race is underway...</string>
+    <string name="stopBtn">Stop Running</string>
+    <string name="alertBtn">Alert Problem</string>
+
 
 </resources>
