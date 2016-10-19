@@ -3,5 +3,7 @@
     <string name="title">Track Your Way</string>
     <string name="userBtn">Runner</string>
     <string name="viewerBtn">Viewer</string>
+    <string name="titleRunner">Welcome Runner</string>
+    <string name="startBtn">Start Running</string>
 
 </resources>
