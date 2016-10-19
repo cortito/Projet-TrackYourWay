@@ -47,7 +47,11 @@ public class RunnerObject {
     }
 
     public String getInfo(){
-        return "Id : " + idBib + "\n" +
-                " Team : " +teamName;
+        StringBuilder s = new StringBuilder("Id : ")
+                .append(idBib)
+                .append(" -- ")
+                .append("Team : ")
+                .append(teamName);
+        return s.toString();
     }
 }
