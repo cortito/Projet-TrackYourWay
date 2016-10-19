@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import fr.trackyourway.runner.RunnerActivity;
+import fr.trackyourway.viewer.ViewerActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

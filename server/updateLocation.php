@@ -4,7 +4,7 @@
     $user_name  = "dbo651682233";
     $password   = "trackyourway";
 
-	$mail = $_GET['mail'];
+	$idBib = $_GET['idBib'];
 	$latitude = $_GET['latitude'];
 	$longitude = $_GET['longitude'];
 
@@ -15,7 +15,7 @@
 	mysql_select_db($database,$db);
 
 	// on crée la requête SQL
-	$sql = 'UPDATE `TrackYourWay` SET `latitude`= '.$latitude.',`longitude`= '.$longitude.' WHERE `mail`='.'"'.$mail.'"';
+	$sql = 'UPDATE `TrackYourWay` SET `latitude`= '.$latitude.',`longitude`= '.$longitude.' WHERE `idBib`='.'"'.$idBib.'"';
 
 	// on envoie la requête
 	$req = mysql_query($sql) or die('Erreur SQL !<br>'.$sql.'<br>'.mysql_error());
