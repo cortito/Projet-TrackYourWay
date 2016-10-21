@@ -46,7 +46,7 @@ public class RunnerModel {
         this.teamName = teamName;
     }
 
-    public String getInfo(){
+    public String getInfo() {
         StringBuilder s = new StringBuilder("Id : ")
                 .append(idBib)
                 .append(" -- ")

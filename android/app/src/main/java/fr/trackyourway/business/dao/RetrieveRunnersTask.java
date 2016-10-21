@@ -18,7 +18,7 @@ import okhttp3.Request;
  */
 
 public class RetrieveRunnersTask extends AsyncTask<String, String, List<RunnerModel>> {
-    public static final String URL_GET = "http://bab-laboratory.com/TrackYourWay/connectbdd.php";
+    private static final String URL_GET = "http://bab-laboratory.com/TrackYourWay/connectbdd.php";
     private static final String TAG = RetrieveRunnersTask.class.getSimpleName();
     private final RunnerListener runnerListener;
     private OkHttpClient client;
@@ -48,12 +48,14 @@ public class RetrieveRunnersTask extends AsyncTask<String, String, List<RunnerMo
             e.printStackTrace();
         }
 
+
         return runnersList;
     }
 
     @Override
     protected void onPostExecute(List<RunnerModel> s) {
         super.onPostExecute(s);
+        super.cancel(true);
         runnerListener.onRunnersRetrieved(s);
     }
 
