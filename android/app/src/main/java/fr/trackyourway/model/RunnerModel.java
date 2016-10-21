@@ -4,14 +4,14 @@ package fr.trackyourway.model;
  * Created by bab on 19/10/16.
  */
 
-public class RunnerObject {
+public class RunnerModel {
 
     private final int idBib;
     private double latitude;
     private double longitude;
     private String teamName;
 
-    public RunnerObject(int idBib, double latitude, double longitude, String teamName) {
+    public RunnerModel(int idBib, double latitude, double longitude, String teamName) {
         this.idBib = idBib;
         this.latitude = latitude;
         this.longitude = longitude;

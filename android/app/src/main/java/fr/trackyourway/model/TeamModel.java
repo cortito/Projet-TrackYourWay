@@ -7,14 +7,14 @@ import java.util.List;
  * Created by bab on 19/10/16.
  */
 
-public class TeamObject {
+public class TeamModel {
 
     private final String teamName;
-    private final List<RunnerObject> runners = new ArrayList<>();
+    private final List<RunnerModel> runners = new ArrayList<>();
 
-    public TeamObject(String teamName) {
+    public TeamModel(String teamName) {
         this.teamName = teamName;
-        for (RunnerObject r : runners){
+        for (RunnerModel r : runners){
             r.setTeamName(this.teamName);
         }
     }
@@ -23,11 +23,11 @@ public class TeamObject {
         return teamName;
     }
 
-    public List<RunnerObject> getRunners() {
+    public List<RunnerModel> getRunners() {
         return runners;
     }
 
-    public void addRunner(RunnerObject r){
+    public void addRunner(RunnerModel r){
         runners.add(r);
     }
 }

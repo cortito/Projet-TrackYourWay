@@ -1,6 +1,8 @@
 package fr.trackyourway.viewer;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
@@ -16,16 +18,17 @@ import java.util.List;
 
 import fr.trackyourway.R;
 import fr.trackyourway.dao.RetrieveRunnersTask;
-import fr.trackyourway.model.RunnerObject;
+import fr.trackyourway.model.RunnerModel;
 
 import static fr.trackyourway.R.id.map;
 
 public class ViewerActivity extends FragmentActivity implements OnMapReadyCallback, RetrieveRunnersTask.RunnerListener {
+    public static final int delay = 1000; // ms
+    public static final Handler h = new Handler();
     private static final String TAG = ViewerActivity.class.getSimpleName();
     private static final float ZOOM_INDEX = 16;
 
     private GoogleMap mMap;
-
     private RetrieveRunnersTask retrieveRunnersTask = null;
 
 
@@ -43,20 +46,32 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         retrieveRunnersTask = new RetrieveRunnersTask(this);
-
         /**
          * Retrieve all runners
          */
-        try {
-            run();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (retrieveRunnersTask.getStatus() == AsyncTask.Status.PENDING) {
+            try {
+                runRetrieveRunner();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Log.d(TAG, "update");
         }
+
+        h.postDelayed(new Runnable(){
+            public void run(){
+                //do something
+                h.postDelayed(this, delay);
+            }
+        }, delay);
+
+            zoomMap();
     }
 
-    void run() throws IOException {
+    void runRetrieveRunner() throws IOException {
         if (retrieveRunnersTask != null) {
             retrieveRunnersTask.execute();
+            
         }
     }
 
@@ -70,16 +85,20 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
     }
 
     @Override
-    public void onRunnersRetrieved(List<RunnerObject> res) {
+    public void onRunnersRetrieved(List<RunnerModel> res) {
         Log.d(TAG, res.size() + "");
         // runners = new ArrayList<>(res);
         LatLng markerRunner = null;
-        for (RunnerObject r : res) {
+        for (RunnerModel r : res) {
             r.getInfo();
             markerRunner = new LatLng(r.getLatitude(), r.getLongitude());
             mMap.addMarker(new MarkerOptions().position(markerRunner).title(r.getInfo()));
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerRunner, ZOOM_INDEX));
     }
 
+    private void zoomMap() {
+        LatLng center = new LatLng(45.7847083, 4.8697467);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, ZOOM_INDEX));
+
+    }
 }
