@@ -8,6 +8,7 @@
     <string name="runTitle">The race is underway...</string>
     <string name="stopBtn">Stop Running</string>
     <string name="alertBtn">Alert Problem</string>
+    <string name="title_activity_viewer">Map</string>
 
 
 </resources>

@@ -1,4 +1,4 @@
-package fr.trackyourway;
+package fr.trackyourway.business.dao;
 
 import android.os.AsyncTask;
 

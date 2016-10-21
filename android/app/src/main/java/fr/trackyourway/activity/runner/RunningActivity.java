@@ -1,4 +1,4 @@
-package fr.trackyourway;
+package fr.trackyourway.activity.runner;
 
 import android.content.Intent;
 import android.location.Location;
@@ -19,6 +19,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 
+import fr.trackyourway.R;
 import okhttp3.OkHttpClient;
 
 public class RunningActivity extends AppCompatActivity implements ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
