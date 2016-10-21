@@ -135,7 +135,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
         //mLastUpdateTimeTextView.setText(mLastUpdateTime);*/
     }
 
-}
+
 /*
     String post(String url, String json) throws IOException {
         RequestBody body = RequestBody.create(Gson, json);
@@ -146,7 +146,6 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
         Response response = client.newCall(request).execute();
         return response.body().string();
     }
-
+*/
 
 }
-*/
