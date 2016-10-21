@@ -18,9 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".runner.RunnerActivity" />
+        <activity android:name=".activity.runner.RunnerActivity" />
         <activity
-            android:name=".viewer.ViewerActivity"
+            android:name=".activity.viewer.ViewerActivity"
             android:label="@string/title_activity_viewer" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

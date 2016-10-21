@@ -1,8 +1,7 @@
-package fr.trackyourway.viewer;
+package fr.trackyourway.activity.viewer;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
@@ -15,16 +14,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Timer;
 
 import fr.trackyourway.R;
-import fr.trackyourway.dao.RetrieveRunnersTask;
+import fr.trackyourway.business.dao.RetrieveRunnersTask;
 import fr.trackyourway.model.RunnerModel;
+import fr.trackyourway.business.services.RetrieveTimerTask;
 
 import static fr.trackyourway.R.id.map;
 
 public class ViewerActivity extends FragmentActivity implements OnMapReadyCallback, RetrieveRunnersTask.RunnerListener {
-    public static final int delay = 1000; // ms
-    public static final Handler h = new Handler();
     private static final String TAG = ViewerActivity.class.getSimpleName();
     private static final float ZOOM_INDEX = 16;
 
@@ -55,23 +54,20 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.d(TAG, "update");
         }
 
-        h.postDelayed(new Runnable(){
-            public void run(){
-                //do something
-                h.postDelayed(this, delay);
-            }
-        }, delay);
+        RetrieveTimerTask timerTask = new RetrieveTimerTask();
 
-            zoomMap();
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(timerTask, 1000, 0);
+
+        zoomMap();
     }
 
     void runRetrieveRunner() throws IOException {
         if (retrieveRunnersTask != null) {
             retrieveRunnersTask.execute();
-            
+
         }
     }
 
