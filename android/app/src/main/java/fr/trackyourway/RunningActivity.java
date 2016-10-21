@@ -1,28 +1,61 @@
 package fr.trackyourway;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.gson.Gson;
 
-public class RunningActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+import okhttp3.OkHttpClient;
+
+public class RunningActivity extends AppCompatActivity implements ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+
+
+    public static final Gson JSON = null;
 
     GoogleApiClient mGoogleApiClient = null;
+
     Location mLastLocation = null;
+    Location mCurrentLocation = null;
+
+    TextView mLatitudeText  = (TextView) findViewById(R.id.latitude);
+    TextView mLongitudeText = (TextView) findViewById(R.id.longitude);
+
+
+    //String mLastUpdateTime = null;
+
+    OkHttpClient client = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_running);
+
+        Button stopBtn = (Button) findViewById(R.id.stopRunBtn);
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mGoogleApiClient.disconnect();
+                Log.d("tag","disconnected");
+                if (!mGoogleApiClient.isConnected()) {
+                    Intent intent = new Intent(RunningActivity.this, RunnerActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -31,13 +64,16 @@ public class RunningActivity extends AppCompatActivity implements GoogleApiClien
                     .addApi(LocationServices.API)
                     .build();
         }
+
+
     }
 
-    protected void createLocationRequest(){
+    protected void createLocationRequest() {
         LocationRequest mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(10000);
         mLocationRequest.setFastestInterval(5000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
     }
 
     protected void onStart() {
@@ -57,22 +93,16 @@ public class RunningActivity extends AppCompatActivity implements GoogleApiClien
         try {
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
-            Log.d("TAG","Connected");
+            Log.d("TAG", "Connected");
 
-        }catch (SecurityException e){
-            Log.e("PERMISSION EXCEPTION","PERMISSON_NOT_GRANTED");
+        } catch (SecurityException e) {
+            Log.e("PERMISSION EXCEPTION", "PERMISSON_NOT_GRANTED");
         }
 
 
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                .addLocationRequest(mLocationRequest);
-
         if (mLastLocation != null) {
 
-            Log.d("GET LOCATION","ça marche");
-            TextView mLatitudeText  = (TextView) findViewById(R.id.latitude);
-            TextView mLongitudeText = (TextView) findViewById(R.id.longitude);
+            Log.d("GET LOCATION", "ça marche");
 
             mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
             mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
@@ -89,4 +119,34 @@ public class RunningActivity extends AppCompatActivity implements GoogleApiClien
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+       /* mCurrentLocation = location;
+        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+        updateUI();*/
+
+    }
+
+    private void updateUI() {
+       /* mLatitudeText.setText(String.valueOf(mCurrentLocation.getLatitude()));
+        mLongitudeText.setText(String.valueOf(mCurrentLocation.getLongitude()));
+        //mLastUpdateTimeTextView.setText(mLastUpdateTime);*/
+    }
+
 }
+/*
+    String post(String url, String json) throws IOException {
+        RequestBody body = RequestBody.create(Gson, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
+
+
+}
+*/
