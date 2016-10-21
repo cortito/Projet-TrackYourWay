@@ -3,6 +3,11 @@
     <string name="title">Track Your Way</string>
     <string name="userBtn">Runner</string>
     <string name="viewerBtn">Viewer</string>
-    <string name="title_activity_viewer">Map</string>
+    <string name="titleRunner">Welcome Runner</string>
+    <string name="startBtn">Start Running</string>
+    <string name="runTitle">The race is underway...</string>
+    <string name="stopBtn">Stop Running</string>
+    <string name="alertBtn">Alert Problem</string>
+
 
 </resources>
