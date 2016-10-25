@@ -14,9 +14,6 @@ public class TeamModel {
 
     public TeamModel(String teamName) {
         this.teamName = teamName;
-        for (RunnerModel r : runners){
-            r.setTeamName(this.teamName);
-        }
     }
 
     public String getTeamName() {

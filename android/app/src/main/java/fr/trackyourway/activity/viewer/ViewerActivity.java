@@ -15,15 +15,20 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
+import java.util.Set;
+
 import fr.trackyourway.R;
 import fr.trackyourway.business.alertdialog.FilterBibDialog;
+import fr.trackyourway.business.alertdialog.FilterTeamDialog;
 import fr.trackyourway.business.services.RetrieveRunnerTimerTask;
 
 import static fr.trackyourway.R.id.map;
 
-public class ViewerActivity extends FragmentActivity implements OnMapReadyCallback, FilterBibDialog.NoticeDialogListener {
+public class ViewerActivity extends FragmentActivity implements OnMapReadyCallback, FilterBibDialog.FilterBibDialogListener, FilterTeamDialog.FilterTeamDialogListener {
     private static final String TAG = ViewerActivity.class.getSimpleName();
     private static final float ZOOM_INDEX = 16;
+    private static final LatLng CENTER = new LatLng(45.7847083, 4.8697467);
+
 
     private GoogleMap mMap;
     private RetrieveRunnerTimerTask retrieveRunnerTimerTask;
@@ -58,7 +63,11 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
                         alertDialog.show(getFragmentManager(), TAG);
                         break;
                     case 2:
-                        
+                        FilterTeamDialog teamDialog = new FilterTeamDialog(ViewerActivity.this, retrieveRunnerTimerTask.getTeamMap());
+                        teamDialog.show(getFragmentManager(), TAG);
+                        break;
+                    default:
+                        zoomMap();
                         break;
                 }
                 spinner.setSelection(0);
@@ -87,21 +96,34 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
     }
 
     private void zoomMap() {
-        LatLng center = new LatLng(45.7847083, 4.8697467);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, ZOOM_INDEX));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTER, ZOOM_INDEX));
     }
 
     @Override
-    public void onDialogPositiveClick(int idBib) {
+    public void onIdBib(int idBib) {
         Marker m = retrieveRunnerTimerTask.getMarkersMap().get(idBib);
 
         if (m != null) {
             LatLng marker = new LatLng(m.getPosition().latitude, m.getPosition().longitude);
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker, ZOOM_INDEX + 2),1500,null);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker, ZOOM_INDEX + 2), 1500, null);
         } else {
-            Toast.makeText(getApplicationContext(),"Can't find runner",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Can't find runner", Toast.LENGTH_LONG).show();
             spinner.setSelection(1);
         }
     }
 
+    @Override
+    public void onTeamClick(String teamName) {
+        Set<String> teamNames = retrieveRunnerTimerTask.getTeamMap().keySet();
+        for(String s : teamNames){
+            // Team to highlight
+            if(s.equals(teamName)){
+
+            }
+            // Other teams
+            else{
+
+            }
+        }
+    }
 }

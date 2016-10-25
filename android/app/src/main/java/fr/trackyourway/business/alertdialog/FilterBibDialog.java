@@ -18,9 +18,9 @@ import fr.trackyourway.R;
 public class FilterBibDialog extends DialogFragment {
 
 
-    private NoticeDialogListener mListener;
+    private FilterBibDialogListener mListener;
 
-    public FilterBibDialog(NoticeDialogListener mListener) {
+    public FilterBibDialog(FilterBibDialogListener mListener) {
         this.mListener = mListener;
     }
 
@@ -43,7 +43,7 @@ public class FilterBibDialog extends DialogFragment {
                 .setPositiveButton("Filter", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         EditText et = (EditText) viewInflater.findViewById(R.id.bib);
-                        mListener.onDialogPositiveClick(Integer.parseInt(et.getText().toString()));
+                        mListener.onIdBib(Integer.parseInt(et.getText().toString()));
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -55,8 +55,8 @@ public class FilterBibDialog extends DialogFragment {
         return builder.create();
     }
 
-    public interface NoticeDialogListener {
-        void onDialogPositiveClick(int idBib);
+    public interface FilterBibDialogListener {
+        void onIdBib(int idBib);
     }
 
 }

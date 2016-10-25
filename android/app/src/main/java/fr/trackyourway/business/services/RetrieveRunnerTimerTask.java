@@ -15,6 +15,7 @@ import java.util.TreeMap;
 
 import fr.trackyourway.business.dao.RetrieveRunnersTask;
 import fr.trackyourway.model.RunnerModel;
+import fr.trackyourway.model.TeamModel;
 
 /**
  * Created by bab on 21/10/16.
@@ -27,6 +28,7 @@ public class RetrieveRunnerTimerTask extends TimerTask implements RetrieveRunner
     private final GoogleMap mMap;
     private final Timer timer;
     private final Map<Integer, Marker> markersMap = new TreeMap<>();
+    private final Map<String, TeamModel> teamMap = new TreeMap<>();
     private RetrieveRunnersTask retrieveRunnersTask;
 
     public RetrieveRunnerTimerTask(GoogleMap mMap) {
@@ -36,6 +38,10 @@ public class RetrieveRunnerTimerTask extends TimerTask implements RetrieveRunner
 
     public Map<Integer, Marker> getMarkersMap() {
         return markersMap;
+    }
+
+    public Map<String, TeamModel> getTeamMap() {
+        return teamMap;
     }
 
     @Override
@@ -67,7 +73,11 @@ public class RetrieveRunnerTimerTask extends TimerTask implements RetrieveRunner
     @Override
     public void onRunnersRetrieved(List<RunnerModel> res) {
         for (RunnerModel r : res) {
+            // New runner
             if (!markersMap.containsKey(r.getIdBib())) {
+                /**
+                 *  Marker
+                 */
                 // MarkerOptions is immutable
                 MarkerOptions o = new MarkerOptions()
                         .position(new LatLng(r.getLatitude(), r.getLongitude()))
@@ -76,8 +86,21 @@ public class RetrieveRunnerTimerTask extends TimerTask implements RetrieveRunner
                         .draggable(false);
                 // Marker is NOT immutable
                 Marker m = mMap.addMarker(o);
-                // Save the new Marker into the TreeMap
                 markersMap.put(r.getIdBib(), m);
+
+
+                /**
+                 * Team
+                 */
+                // if team exists
+                if (r.getTeamName() != null) {
+                    // if not register yet, add new team
+                    if (!teamMap.containsKey(r.getTeamName())) {
+                        teamMap.put(r.getTeamName(), new TeamModel(r.getTeamName()));
+                    }
+                    // Add runner to the team
+                    teamMap.get(r.getTeamName()).addRunner(r);
+                }
             } else {
                 // Update the Marker
                 markersMap.get(r.getIdBib()).
