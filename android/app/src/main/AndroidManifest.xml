@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,9 +21,8 @@
         <activity
             android:name=".activity.viewer.ViewerActivity"
             android:label="@string/title_activity_viewer" />
-
-        <activity android:name=".activity.runner.RunnerActivity"/>
-        <activity android:name=".activity.runner.RunningActivity"/>
+        <activity android:name=".activity.runner.RunnerActivity" />
+        <activity android:name=".activity.runner.RunningActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -35,6 +34,8 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <activity android:name=".activity.runner.Alert.AlertActivity"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package fr.trackyourway.business.services;
 
 import android.location.Location;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -43,7 +44,7 @@ public class SendingRunnerTimerTask extends TimerTask implements AsyncSendingRun
      private void sendRunner() throws IOException {
         if (asyncSendingRunnerTask != null) {
             asyncSendingRunnerTask.execute(location);
-
+            Log.d("Runner", "Position envoyé");
         }
     }
 
