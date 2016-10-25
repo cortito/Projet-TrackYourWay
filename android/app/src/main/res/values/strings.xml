@@ -9,15 +9,12 @@
     <string name="stopBtn">Stop Running</string>
     <string name="alertBtn">Alert Problem</string>
     <string name="title_activity_viewer">Map</string>
-<<<<<<< HEAD
     <string name="spinnerFilter">Filter</string>
     <string-array name="filterStringArray">
         <item></item>
         <item>Bib</item>
         <item>Team</item>
     </string-array>
-=======
 
 
->>>>>>> 5a8cfb22d6d840ccedfb7dc45557fc9c71a6aa68
 </resources>
