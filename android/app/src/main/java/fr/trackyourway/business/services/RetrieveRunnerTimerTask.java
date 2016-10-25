@@ -83,11 +83,11 @@ public class RetrieveRunnerTimerTask extends TimerTask implements RetrieveRunner
                 MarkerOptions o = new MarkerOptions()
                         .position(new LatLng(r.getLatitude(), r.getLongitude()))
                         .title(r.getInfo())
-                        .flat(true)
+                        .flat(false)
                         .draggable(false);
                 // Marker is NOT immutable
                 Marker m = mMap.addMarker(o);
-                runnerWrapMap.put(r.getIdBib(), new RunnerWrap(m,r));
+                runnerWrapMap.put(r.getIdBib(), new RunnerWrap(m, r));
 
 
                 /**
@@ -96,7 +96,7 @@ public class RetrieveRunnerTimerTask extends TimerTask implements RetrieveRunner
                 // if team exists
                 if (!r.getTeamName().isEmpty() && r.getTeamName() != null) {
                     // if not register yet, add new team
-                    if ( !teamMap.containsKey(r.getTeamName())) {
+                    if (!teamMap.containsKey(r.getTeamName())) {
                         teamMap.put(r.getTeamName(), new TeamModel(r.getTeamName()));
                     }
                     // Add runner to the team

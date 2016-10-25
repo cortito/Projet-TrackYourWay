@@ -13,6 +13,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
@@ -112,16 +113,21 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
     }
 
     private void zoomMap() {
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(CENTER, ZOOM_INDEX), 1500, null);
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(CENTER)
+                .zoom(ZOOM_INDEX)                   // Sets the zoom
+                .bearing(0)                // Sets the orientation
+                .build();                   // Creates a CameraPosition from the builder
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1500, null);
     }
 
     private void resetMarkerAndZoom() {
         zoomMap();
-        onTeamClick("");
+        resetMarkers(null);
     }
 
-    private void resetMarkers(List<RunnerWrap> runners){
-        if(runners == null){
+    private void resetMarkers(List<RunnerWrap> runners) {
+        if (runners == null) {
             runners = new ArrayList<>(retrieveRunnerTimerTask.getRunnerWrapMap().values());
         }
         for (RunnerWrap r : runners) {
