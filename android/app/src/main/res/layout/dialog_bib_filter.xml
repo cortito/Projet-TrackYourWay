@@ -9,6 +9,8 @@
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:hint="1234" />
+        android:hint="1234"
+        android:textColorLink="#000000"
+        android:textColorHint="#aaaaaa"/>
 
 </LinearLayout>

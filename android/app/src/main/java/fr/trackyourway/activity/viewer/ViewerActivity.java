@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +23,7 @@ import fr.trackyourway.R;
 import fr.trackyourway.business.alertdialog.FilterBibDialog;
 import fr.trackyourway.business.alertdialog.FilterTeamDialog;
 import fr.trackyourway.business.services.RetrieveRunnerTimerTask;
+import fr.trackyourway.business.spinner.FilterSpinner;
 import fr.trackyourway.model.RunnerWrap;
 
 import static fr.trackyourway.R.id.map;
@@ -35,7 +36,8 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
 
     private GoogleMap mMap;
     private RetrieveRunnerTimerTask retrieveRunnerTimerTask;
-    private Spinner spinner;
+    private FilterSpinner spinner;
+    private Button resetButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,8 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
         /**
          * Fill up the spinner
          */
-        spinner = (Spinner) findViewById(R.id.spinnerFilter);
+        spinner = (FilterSpinner) findViewById(R.id.spinnerFilter);
+
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.filterStringArray, R.layout.spinner_style);
@@ -61,6 +64,9 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
+                    case 0:
+                        resetMarkerAndZoom();
+                        break;
                     case 1:
                         FilterBibDialog alertDialog = new FilterBibDialog(ViewerActivity.this);
                         alertDialog.show(getFragmentManager(), TAG);
@@ -69,17 +75,23 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
                         FilterTeamDialog teamDialog = new FilterTeamDialog(ViewerActivity.this, retrieveRunnerTimerTask.getTeamMap());
                         teamDialog.show(getFragmentManager(), TAG);
                         break;
-                    case 0:
-                        onTeamClick("");
-                        zoomMap();
-                        break;
                 }
-                spinner.setSelection(0);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        /**
+         * Reset Button
+         */
+        resetButton = (Button) findViewById(R.id.resetButton);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetMarkerAndZoom();
             }
         });
     }
@@ -100,20 +112,36 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
     }
 
     private void zoomMap() {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTER, ZOOM_INDEX));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(CENTER, ZOOM_INDEX), 1500, null);
+    }
+
+    private void resetMarkerAndZoom() {
+        zoomMap();
+        onTeamClick("");
+    }
+
+    private void resetMarkers(List<RunnerWrap> runners){
+        if(runners == null){
+            runners = new ArrayList<>(retrieveRunnerTimerTask.getRunnerWrapMap().values());
+        }
+        for (RunnerWrap r : runners) {
+            r.getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        }
     }
 
     @Override
     public void onIdBib(int idBib) {
+        resetMarkers(null);
         RunnerWrap rw = retrieveRunnerTimerTask.getRunnerWrapMap().get(idBib);
 
         if (rw != null) {
             Marker m = rw.getMarker();
+            m.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
             LatLng marker = new LatLng(m.getPosition().latitude, m.getPosition().longitude);
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker, ZOOM_INDEX + 2), 1500, null);
         } else {
             Toast.makeText(getApplicationContext(), "Can't find runner", Toast.LENGTH_LONG).show();
-            spinner.setSelection(1);
+            resetMarkerAndZoom();
         }
     }
 
@@ -132,9 +160,7 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
                     r.getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 }
         } else {
-            for (RunnerWrap r : runners) {
-                r.getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-            }
+            resetMarkers(runners);
         }
     }
 }

@@ -12,9 +12,10 @@
     <string name="spinnerFilter">Filter</string>
     <string-array name="filterStringArray">
         <item></item>
-        <item>Bib</item>
-        <item>Team</item>
+        <item>bib</item>
+        <item>team</item>
     </string-array>
+    <string name="resetButton">Reset</string>
 
 
 </resources>

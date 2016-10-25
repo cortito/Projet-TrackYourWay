@@ -9,21 +9,18 @@
         android:id="@+id/filtering"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="10sp"
         android:text="Filtering by : "
-        android:layout_marginBottom="20sp"
-        android:layout_marginLeft="20sp"
-        android:layout_marginTop="20sp"
-        android:textSize="30sp"
-        android:textColor="@color/colorTextFilter" />
+        android:textColor="@color/colorTextFilter"
+        android:textSize="20sp" />
 
-    <Spinner
+    <fr.trackyourway.business.spinner.FilterSpinner
         android:id="@+id/spinnerFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/filtering"
-        android:layout_marginBottom="20sp"
-        android:layout_marginLeft="20sp"
-        android:layout_marginTop="20sp"
+        android:layout_alignBottom="@id/filtering"
+        android:layout_toEndOf="@id/filtering"
         android:backgroundTint="@color/colorTextFilter" />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,6 +29,15 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/spinnerFilter" />
+        android:layout_below="@+id/resetButton" />
+
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resetButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
 
 </RelativeLayout>
