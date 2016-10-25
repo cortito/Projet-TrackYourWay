@@ -106,13 +106,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
         }
 
 
-        if (mLastLocation != null) {
-
-            Log.d("GET LOCATION", "ça marche");
-
-            mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
-            mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
-        }
+      
 
         asyncSendingRunnerTask = new AsyncSendingRunnerTask(this);
         try {
