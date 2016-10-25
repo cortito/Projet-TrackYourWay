@@ -15,14 +15,16 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 
+import java.io.IOException;
+
 import fr.trackyourway.R;
+import fr.trackyourway.business.dao.AsyncSendingRunnerTask;
 import okhttp3.OkHttpClient;
 
-public class RunningActivity extends AppCompatActivity implements ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class RunningActivity extends AppCompatActivity implements ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, AsyncSendingRunnerTask.RunnerSendListener {
 
 
     public static final Gson JSON = null;
@@ -32,8 +34,11 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
     Location mLastLocation = null;
     Location mCurrentLocation = null;
 
-    TextView mLatitudeText  = (TextView) findViewById(R.id.latitude);
-    TextView mLongitudeText = (TextView) findViewById(R.id.longitude);
+    TextView mLatitudeText;  //= (TextView) findViewById(R.id.latitude);
+    TextView mLongitudeText; //= (TextView) findViewById(R.id.longitude);
+
+    AsyncSendingRunnerTask asyncSendingRunnerTask;
+
 
 
     //String mLastUpdateTime = null;
@@ -69,13 +74,13 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
 
     }
 
-    protected void createLocationRequest() {
+    /*protected void createLocationRequest() {
         LocationRequest mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(10000);
         mLocationRequest.setFastestInterval(5000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-    }
+    }*/
 
     protected void onStart() {
         mGoogleApiClient.connect();
@@ -109,6 +114,25 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
             mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
         }
 
+        asyncSendingRunnerTask = new AsyncSendingRunnerTask(this);
+        try {
+            sendRunner();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void sendRunner() throws IOException {
+        if (asyncSendingRunnerTask != null) {
+            asyncSendingRunnerTask.execute(mLastLocation);
+
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        asyncSendingRunnerTask.cancel(true);
     }
 
     @Override
@@ -137,16 +161,9 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
     }
 
 
-/*
-    String post(String url, String json) throws IOException {
-        RequestBody body = RequestBody.create(Gson, json);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-        Response response = client.newCall(request).execute();
-        return response.body().string();
-    }
-*/
 
+    @Override
+    public void onRunnerRunning(String o) {
+
+    }
 }
