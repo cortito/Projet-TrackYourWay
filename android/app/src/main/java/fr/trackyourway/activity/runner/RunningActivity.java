@@ -106,7 +106,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
         }
 
 
-      
+
 
         asyncSendingRunnerTask = new AsyncSendingRunnerTask(this);
         try {

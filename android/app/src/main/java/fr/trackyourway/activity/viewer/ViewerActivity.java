@@ -2,6 +2,7 @@ package fr.trackyourway.activity.viewer;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,7 +20,7 @@ import fr.trackyourway.business.services.RetrieveRunnerTimerTask;
 
 import static fr.trackyourway.R.id.map;
 
-public class ViewerActivity extends FragmentActivity implements OnMapReadyCallback {
+public class ViewerActivity extends FragmentActivity implements OnMapReadyCallback, FilterBibDialog.NoticeDialogListener {
     private static final String TAG = ViewerActivity.class.getSimpleName();
     private static final float ZOOM_INDEX = 16;
 
@@ -52,7 +53,7 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 1:
-                        FilterBibDialog alertDialog = new FilterBibDialog();
+                        FilterBibDialog alertDialog = new FilterBibDialog(ViewerActivity.this);
                         alertDialog.show(getFragmentManager(), TAG);
                         break;
                     case 2:
@@ -86,6 +87,12 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
     private void zoomMap() {
         LatLng center = new LatLng(45.7847083, 4.8697467);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, ZOOM_INDEX));
+    }
+
+    @Override
+    public void onDialogPositiveClick(int idBib) {
+        Log.d(TAG, idBib + "");
 
     }
+
 }
