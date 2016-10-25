@@ -30,7 +30,9 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
 
 
     public final static int UPDATE_RATE = 5000;
+    public final static int MY_PERMISSION_REQUEST_READ_FINE_LOCATION = 111;
     GoogleApiClient mGoogleApiClient = null;
+
 
     private Location mCurrentLocation = null;
 
@@ -96,28 +98,74 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
-        /*try {
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                    mGoogleApiClient);
-            Log.d("TAG", "Connected");
+        Toast.makeText(RunningActivity.this,
+                "attempt connection, :)",
+                Toast.LENGTH_LONG).show();
 
-        } catch (SecurityException e) {
-            Log.e("PERMISSION EXCEPTION", "PERMISSON_NOT_GRANTED");
-        }*/
-        requestLocationUpdates();
-    }
 
-    private void requestLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            ActivityCompat.requestPermissions(RunningActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSION_REQUEST_READ_FINE_LOCATION);
+
+            return;
         }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
+
 
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_REQUEST_READ_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(RunningActivity.this,
+                            "permission was granted, :)",
+                            Toast.LENGTH_LONG).show();
+
+                    try{
+                        LocationServices.FusedLocationApi.requestLocationUpdates(
+                                mGoogleApiClient, locationRequest, this);
+                    }catch(SecurityException e){
+                        Toast.makeText(RunningActivity.this,
+                                "SecurityException:\n" + e.toString(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(RunningActivity.this,
+                            "permission denied, ...:(",
+                            Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }
+    }
+
 
     @Override
     protected void onPause() {
         super.onPause();
-        sendingRunnerTimerTask.onPause();
+        if(sendingRunnerTimerTask != null){
+            sendingRunnerTimerTask.onPause();
+        }
+        
     }
 
     @Override
