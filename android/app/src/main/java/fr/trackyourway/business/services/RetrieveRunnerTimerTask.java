@@ -34,6 +34,10 @@ public class RetrieveRunnerTimerTask extends TimerTask implements RetrieveRunner
         timer = new Timer();
     }
 
+    public Map<Integer, Marker> getMarkersMap() {
+        return markersMap;
+    }
+
     @Override
     public void run() {
 

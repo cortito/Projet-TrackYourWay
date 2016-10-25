@@ -2,17 +2,18 @@ package fr.trackyourway.activity.viewer;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 import fr.trackyourway.R;
 import fr.trackyourway.business.alertdialog.FilterBibDialog;
@@ -57,9 +58,10 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
                         alertDialog.show(getFragmentManager(), TAG);
                         break;
                     case 2:
+                        
                         break;
                 }
-
+                spinner.setSelection(0);
             }
 
             @Override
@@ -91,8 +93,15 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
 
     @Override
     public void onDialogPositiveClick(int idBib) {
-        Log.d(TAG, idBib + "");
+        Marker m = retrieveRunnerTimerTask.getMarkersMap().get(idBib);
 
+        if (m != null) {
+            LatLng marker = new LatLng(m.getPosition().latitude, m.getPosition().longitude);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker, ZOOM_INDEX + 2),1500,null);
+        } else {
+            Toast.makeText(getApplicationContext(),"Can't find runner",Toast.LENGTH_LONG).show();
+            spinner.setSelection(1);
+        }
     }
 
 }
