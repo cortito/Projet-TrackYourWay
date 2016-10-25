@@ -12,15 +12,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.trackyourway.R;
 import fr.trackyourway.business.alertdialog.FilterBibDialog;
 import fr.trackyourway.business.alertdialog.FilterTeamDialog;
 import fr.trackyourway.business.services.RetrieveRunnerTimerTask;
+import fr.trackyourway.model.RunnerWrap;
 
 import static fr.trackyourway.R.id.map;
 
@@ -66,7 +69,8 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
                         FilterTeamDialog teamDialog = new FilterTeamDialog(ViewerActivity.this, retrieveRunnerTimerTask.getTeamMap());
                         teamDialog.show(getFragmentManager(), TAG);
                         break;
-                    default:
+                    case 0:
+                        onTeamClick("");
                         zoomMap();
                         break;
                 }
@@ -101,9 +105,10 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
 
     @Override
     public void onIdBib(int idBib) {
-        Marker m = retrieveRunnerTimerTask.getMarkersMap().get(idBib);
+        RunnerWrap rw = retrieveRunnerTimerTask.getRunnerWrapMap().get(idBib);
 
-        if (m != null) {
+        if (rw != null) {
+            Marker m = rw.getMarker();
             LatLng marker = new LatLng(m.getPosition().latitude, m.getPosition().longitude);
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker, ZOOM_INDEX + 2), 1500, null);
         } else {
@@ -114,16 +119,23 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
 
     @Override
     public void onTeamClick(String teamName) {
-        Set<String> teamNames = retrieveRunnerTimerTask.getTeamMap().keySet();
-        for(String s : teamNames){
-            // Team to highlight
-            if(s.equals(teamName)){
+        List<RunnerWrap> runners = new ArrayList<>(retrieveRunnerTimerTask.getRunnerWrapMap().values());
 
-            }
-            // Other teams
-            else{
-
+        if (!teamName.isEmpty()) {
+            for (RunnerWrap r : runners)
+                // Highlights the runners in the team
+                if (r.getRunner().getTeamName().equals(teamName)) {
+                    r.getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                }
+                // Other teams
+                else {
+                    r.getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                }
+        } else {
+            for (RunnerWrap r : runners) {
+                r.getMarker().setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
             }
         }
     }
 }
+

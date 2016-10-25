@@ -48,10 +48,12 @@ public class RunnerModel {
 
     public String getInfo() {
         StringBuilder s = new StringBuilder("Id : ")
-                .append(idBib)
-                .append(" -- ")
-                .append("Team : ")
-                .append(teamName);
+                .append(idBib);
+        if (!teamName.isEmpty()) {
+            s.append(" -- ")
+                    .append("Team : ")
+                    .append(teamName);
+        }
         return s.toString();
     }
 }
