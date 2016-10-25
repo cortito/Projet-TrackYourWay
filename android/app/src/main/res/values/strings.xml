@@ -4,5 +4,10 @@
     <string name="userBtn">Runner</string>
     <string name="viewerBtn">Viewer</string>
     <string name="title_activity_viewer">Map</string>
-
+    <string name="spinnerFilter">Filter</string>
+    <string-array name="filterStringArray">
+        <item></item>
+        <item>Bib</item>
+        <item>Team</item>
+    </string-array>
 </resources>
