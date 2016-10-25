@@ -41,11 +41,13 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
         setContentView(R.layout.activity_running);
 
         Button stopBtn = (Button) findViewById(R.id.stopRunBtn);
+        Button alertBtn = (Button) findViewById(R.id.alertBtn);
+
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mGoogleApiClient.disconnect();
-                Log.d("tag","disconnected");
+                Log.d("tag","going to alert");
                 if (!mGoogleApiClient.isConnected()) {
                     Intent intent = new Intent(RunningActivity.this, RunnerActivity.class);
                     startActivity(intent);
