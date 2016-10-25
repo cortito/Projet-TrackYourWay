@@ -9,37 +9,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
-import com.google.gson.Gson;
-
-import java.io.IOException;
 
 import fr.trackyourway.R;
 import fr.trackyourway.business.dao.AsyncSendingRunnerTask;
+import fr.trackyourway.business.services.SendingRunnerTimerTask;
 import okhttp3.OkHttpClient;
 
 public class RunningActivity extends AppCompatActivity implements ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, AsyncSendingRunnerTask.RunnerSendListener {
 
 
-    public static final Gson JSON = null;
-
     GoogleApiClient mGoogleApiClient = null;
 
-    Location mLastLocation = null;
-    Location mCurrentLocation = null;
+    private Location mLastLocation = null;
 
-    TextView mLatitudeText;  //= (TextView) findViewById(R.id.latitude);
-    TextView mLongitudeText; //= (TextView) findViewById(R.id.longitude);
-
-    AsyncSendingRunnerTask asyncSendingRunnerTask;
-
-
+    //private AsyncSendingRunnerTask asyncSendingRunnerTask;
+    private SendingRunnerTimerTask sendingRunnerTimerTask;
 
     //String mLastUpdateTime = null;
 
@@ -105,28 +95,31 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
             Log.e("PERMISSION EXCEPTION", "PERMISSON_NOT_GRANTED");
         }
 
+        sendingRunnerTimerTask = new SendingRunnerTimerTask(mLastLocation);
+        sendingRunnerTimerTask.start();
 
+      // TODO HERE
 
-
-        asyncSendingRunnerTask = new AsyncSendingRunnerTask(this);
-        try {
+        //asyncSendingRunnerTask = new AsyncSendingRunnerTask(this);
+        /*try {
             sendRunner();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
-    void sendRunner() throws IOException {
+    /*void sendRunner() throws IOException {
         if (asyncSendingRunnerTask != null) {
             asyncSendingRunnerTask.execute(mLastLocation);
 
         }
-    }
+    }*/
 
     @Override
     protected void onPause() {
         super.onPause();
-        asyncSendingRunnerTask.cancel(true);
+        sendingRunnerTimerTask.onPause();
+        //asyncSendingRunnerTask.cancel(true);
     }
 
     @Override
