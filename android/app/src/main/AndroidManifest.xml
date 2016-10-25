@@ -18,10 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.runner.RunnerActivity" />
         <activity
             android:name=".activity.viewer.ViewerActivity"
             android:label="@string/title_activity_viewer" />
+
+        <activity android:name=".activity.runner.RunnerActivity"/>
+        <activity android:name=".activity.runner.RunningActivity"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
