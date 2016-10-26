@@ -19,29 +19,35 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+Log.d("Main",Locale.getDefault()+"");
+        Button buttonLanguage = (Button) findViewById(R.id.language);
 
-        Log.d("Main",Locale.getDefault()+"");
+        if (Locale.getDefault().toString().contains("fr")) {
+            buttonLanguage.setBackgroundResource(R.drawable.en);
+        } else if (Locale.getDefault().toString().contains("en")) {
+            buttonLanguage.setBackgroundResource(R.drawable.fr);
+        }
         /**
          * Switch language
          */
-        Button buttonLanguage = (Button) findViewById(R.id.language);
+
         buttonLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String languageToLoad = Locale.getDefault().toString().contains("fr") ? "en" : "fr";
 
-                String languageToLoad  = "fr";
                 Locale locale = new Locale(languageToLoad);
                 Locale.setDefault(locale);
                 Configuration config = new Configuration();
                 config.setLocale(locale);
-                getApplicationContext().getResources().updateConfiguration(config,getApplicationContext().getResources().getDisplayMetrics());
+                getApplicationContext().getResources().updateConfiguration(config, null);
 
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                Log.d("Main",locale+"");
             }
         });
+
         /**
          * Runner
          */

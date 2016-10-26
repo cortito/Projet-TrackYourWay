@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import java.util.Map;
 
+import fr.trackyourway.R;
 import fr.trackyourway.model.TeamModel;
 
 /**
@@ -30,7 +31,7 @@ public class FilterTeamDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final String[] teams = teamMap.keySet().toArray(new String[0]);
-        builder.setTitle("Select a team")
+        builder.setTitle(R.string.teamSelect)
                 .setItems(teams, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mListener.onTeamClick(teams[id]);

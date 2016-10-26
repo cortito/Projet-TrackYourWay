@@ -9,6 +9,7 @@
     <string name="stopBtn">Stop Running</string>
     <string name="alertBtn">Alert Problem</string>
     <string name="title_activity_viewer">Map</string>
+    <string name="filterBy">Filtering by :</string>
     <string name="spinnerFilter">Filter</string>
     <string-array name="filterStringArray">
         <item></item>
@@ -16,6 +17,10 @@
         <item>team</item>
     </string-array>
     <string name="resetButton">Reset</string>
+    <string name="bibFilter">Filtering by bib</string>
+    <string name="filter">Filter</string>
+    <string name="cancel">Cancel</string>
+    <string name="teamSelect">Select a team</string>
 
 
 </resources>

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20sp"
         android:layout_marginTop="10sp"
-        android:text="Filtering by : "
+        android:text="@string/filterBy"
         android:textColor="@color/colorTextFilter"
         android:textSize="20sp" />
 

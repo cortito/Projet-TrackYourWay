@@ -17,6 +17,11 @@
         <item>team</item>
     </string-array>
     <string name="resetButton">Reset</string>
+    <string name="filterBy">Filtering by :</string>
+    <string name="bibFilter">Filtering by bib</string>
+    <string name="cancel">Cancel</string>
+    <string name="filter">Filter</string>
+    <string name="teamSelect">Select a team</string>
 
 
 </resources>

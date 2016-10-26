@@ -16,7 +16,12 @@
         <item>dossard</item>
         <item>équipe</item>
     </string-array>
-    <string name="resetButton">Reset</string>
+    <string name="resetButton">Effacer</string>
+    <string name="filterBy">Filtrer par :</string>
+    <string name="teamSelect">Sélectionnez une équipe</string>
+    <string name="bibFilter">Filtrer par dossard</string>
+    <string name="cancel">Annuler</string>
+    <string name="filter">Filtrer</string>
 
 
 </resources>

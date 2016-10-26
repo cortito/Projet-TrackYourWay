@@ -24,6 +24,8 @@ public class FilterBibDialog extends DialogFragment {
         this.mListener = mListener;
     }
 
+    public FilterBibDialog() {    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final LayoutInflater inflater;
@@ -39,14 +41,14 @@ public class FilterBibDialog extends DialogFragment {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(viewInflater)
-                .setMessage("Filtering by bib")
-                .setPositiveButton("Filter", new DialogInterface.OnClickListener() {
+                .setMessage(R.string.bibFilter)
+                .setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         EditText et = (EditText) viewInflater.findViewById(R.id.bib);
                         mListener.onIdBib(Integer.parseInt(et.getText().toString()));
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
