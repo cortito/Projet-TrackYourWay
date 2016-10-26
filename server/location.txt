@@ -2,3 +2,11 @@ http://bab-laboratory.com/TrackYourWay/updateLocation.php?idBib=0&latitude=45.78
 
 
 http://bab-laboratory.com/TrackYourWay/connectbdd.php
+
+
+http://bab-laboratory.com/TrackYourWay/alertbdd.php
+
+
+http://bab-laboratory.com/TrackYourWay/updateLocation.php?alertType=LOST&idBib=0&latitude=45.784510&longitude=4.869742
+
+http://bab-laboratory.com/TrackYourWay/updateLocation.php?alertType=INJURED&idBib=0&latitude=45.784510&longitude=4.869742

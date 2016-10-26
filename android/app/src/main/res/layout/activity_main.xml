@@ -11,6 +11,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="fr.trackyourway.MainActivity">
 
+    <Button
+        android:id="@+id/language"
+        android:layout_width="48px"
+        android:layout_height="48px"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/fr" />
+
 
     <TextView
         android:id="@+id/header"

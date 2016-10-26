@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Track Your Way</string>
+    <string name="title">Track Your Way</string>
+    <string name="userBtn">Coureur</string>
+    <string name="viewerBtn">Spectateur</string>
+    <string name="titleRunner">Bienvenu Coureur</string>
+    <string name="startBtn">Commencer la course</string>
+    <string name="runTitle">La course est en cours...</string>
+    <string name="stopBtn">Arrêter la course</string>
+    <string name="alertBtn">Alerte Problème</string>
+    <string name="title_activity_viewer">Carte</string>
+    <string name="spinnerFilter">Filtre</string>
+    <string-array name="filterStringArray">
+        <item></item>
+        <item>dossard</item>
+        <item>équipe</item>
+    </string-array>
+    <string name="resetButton">Reset</string>
+
+
+</resources>

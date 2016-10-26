@@ -34,11 +34,8 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
     private static final float ZOOM_INDEX = 16;
     private static final LatLng CENTER = new LatLng(45.7847083, 4.8697467);
 
-
     private GoogleMap mMap;
     private RetrieveRunnerTimerTask retrieveRunnerTimerTask;
-    private FilterSpinner spinner;
-    private Button resetButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +49,7 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
         /**
          * Fill up the spinner
          */
+        FilterSpinner spinner;
         spinner = (FilterSpinner) findViewById(R.id.spinnerFilter);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -81,14 +79,13 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
         /**
          * Reset Button
          */
-        resetButton = (Button) findViewById(R.id.resetButton);
+        Button resetButton = (Button) findViewById(R.id.resetButton);
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
