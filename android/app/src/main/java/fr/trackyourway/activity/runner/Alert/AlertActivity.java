@@ -39,7 +39,7 @@ public class AlertActivity extends FragmentActivity implements AsyncSendingAlert
         Bundle extras = getIntent().getExtras();
         double latitude = extras.getDouble("latitude");
         double longitude = extras.getDouble("longitude");
-        
+
         mLastLocation.setLatitude(latitude);
         mLastLocation.setLongitude(longitude);
 
