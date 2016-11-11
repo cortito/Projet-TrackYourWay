@@ -4,7 +4,9 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.IMAGE_CAPTURE"/>
+    <uses-feature android:name="android.hardware.camera2.CameraDevice"/>
     <application
 
         android:allowBackup="true"
@@ -15,7 +17,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -24,6 +25,7 @@
             android:label="@string/title_activity_viewer" />
         <activity android:name=".activity.runner.RunnerActivity" />
         <activity android:name=".activity.runner.RunningActivity" />
+        <activity android:name=".activity.runner.Alert.AlertActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -36,7 +38,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".activity.runner.Alert.AlertActivity"></activity>
+
     </application>
 
 </manifest>

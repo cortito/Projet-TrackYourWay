@@ -24,6 +24,9 @@
     <string name="teamSelect">Select a team</string>
     <string name="id">Bib</string>
     <string name="team">Team</string>
+    <string name="TakepicBtn">Take pic</string>
+    <string name="alertBtnTxt">Send Alert</string>
+    <string name="titleAlert">Click on the button if you have an alert</string>
 
 
 </resources>

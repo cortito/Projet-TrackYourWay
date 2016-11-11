@@ -25,6 +25,9 @@
     <string name="google_maps_key" translatable="false"></string>
     <string name="id">Dossard</string>
     <string name="team">Equipe</string>
+    <string name="TakepicBtn">Prendre une photo</string>
+    <string name="alertBtnTxt">Envoyer Alerte</string>
+    <string name="titleAlert">Cliquer sur le bouton envoie alert si vous avez un problème.</string>
 
 
 </resources>

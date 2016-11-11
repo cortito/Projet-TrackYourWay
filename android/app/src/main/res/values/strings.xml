@@ -11,6 +11,7 @@
     <string name="title_activity_viewer">Map</string>
     <string name="filterBy">Filtering by :</string>
     <string name="spinnerFilter">Filter</string>
+    <string name="alertBtnTxt">Send Alert</string>
     <string-array name="filterStringArray">
         <item></item>
         <item>bib</item>
@@ -23,6 +24,8 @@
     <string name="teamSelect">Select a team</string>
     <string name="team">Team</string>
     <string name="id">Bib</string>
+    <string name="TakepicBtn">Take pic</string>
+    <string name="titleAlert">Click on the button if you have an alert</string>
 
 
 </resources>
