@@ -22,6 +22,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import fr.trackyourway.R;
+import fr.trackyourway.activity.runner.Alert.AlertActivity;
 import fr.trackyourway.business.dao.AsyncSendingRunnerTask;
 import fr.trackyourway.business.services.SendingRunnerTimerTask;
 import okhttp3.OkHttpClient;
@@ -56,9 +57,21 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
             @Override
             public void onClick(View v) {
                 mGoogleApiClient.disconnect();
-                Log.d("tag", "going to alert");
+                Log.d("tag", "going to stop");
                 if (!mGoogleApiClient.isConnected()) {
                     Intent intent = new Intent(RunningActivity.this, RunnerActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        alertBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mGoogleApiClient.disconnect();
+                Log.d("tag", "going to Alert");
+                if (!mGoogleApiClient.isConnected()) {
+                    Intent intent = new Intent(RunningActivity.this, AlertActivity.class);
                     startActivity(intent);
                 }
             }
@@ -108,6 +121,9 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -117,7 +133,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             ActivityCompat.requestPermissions(RunningActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CAMERA},
                     MY_PERMISSION_REQUEST_READ_FINE_LOCATION);
 
             return;
