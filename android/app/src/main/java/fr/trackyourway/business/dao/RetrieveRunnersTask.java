@@ -15,9 +15,14 @@ import okhttp3.Request;
 
 /**
  * Created by bab on 19/10/16.
+ *
+ * Call the server to get the Runners List (JSON)
+ * Return a List of RunnerModel when it is done
+ *
+ * Create an interface RunnerListener to share the List of RunnerModel
  */
 
-public class RetrieveRunnersTask extends AsyncTask<String, String, List<RunnerModel>> {
+public class RetrieveRunnersTask extends AsyncTask<Void, Void, List<RunnerModel>> {
     private static final String URL_GET = "http://bab-laboratory.com/TrackYourWay/connectbdd.php";
     private static final String TAG = RetrieveRunnersTask.class.getSimpleName();
     private final RunnerListener runnerListener;
@@ -29,7 +34,7 @@ public class RetrieveRunnersTask extends AsyncTask<String, String, List<RunnerMo
     }
 
     @Override
-    protected List<RunnerModel> doInBackground(String... params) {
+    protected List<RunnerModel> doInBackground(Void... params) {
         List<RunnerModel> runnersList = new ArrayList<>();
         client = new OkHttpClient().newBuilder().build();
 

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,9 +18,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-Log.d("Main",Locale.getDefault()+"");
-        Button buttonLanguage = (Button) findViewById(R.id.language);
 
+        // Set the correct flag
+        Button buttonLanguage = (Button) findViewById(R.id.language);
         if (Locale.getDefault().toString().contains("fr")) {
             buttonLanguage.setBackgroundResource(R.drawable.en);
         } else if (Locale.getDefault().toString().contains("en")) {
@@ -49,7 +48,7 @@ Log.d("Main",Locale.getDefault()+"");
         });
 
         /**
-         * Runner
+         * Runner Activity
          */
         Button buttonRunner = (Button) findViewById(R.id.runner);
         buttonRunner.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +60,7 @@ Log.d("Main",Locale.getDefault()+"");
         });
 
         /**
-         * Viewer
+         * Viewer Activity
          */
         Button buttonViewer = (Button) findViewById(R.id.viewer);
         buttonViewer.setOnClickListener(new View.OnClickListener() {

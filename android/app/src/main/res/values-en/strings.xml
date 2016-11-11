@@ -22,6 +22,8 @@
     <string name="cancel">Cancel</string>
     <string name="filter">Filter</string>
     <string name="teamSelect">Select a team</string>
+    <string name="id">Bib</string>
+    <string name="team">Team</string>
 
 
 </resources>

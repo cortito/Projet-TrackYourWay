@@ -20,6 +20,10 @@ import fr.trackyourway.model.TeamModel;
 
 /**
  * Created by bab on 21/10/16.
+ *
+ * Send every Xsec a request to the server
+ * Get a List of RunnerModel with RetrieveRunnersTask
+ * Update the markers of each runner through RunnerWrap
  */
 
 public class RetrieveRunnerTimerTask extends TimerTask implements RetrieveRunnersTask.RunnerListener {
@@ -60,6 +64,9 @@ public class RetrieveRunnerTimerTask extends TimerTask implements RetrieveRunner
         }
     }
 
+    /**
+     * Start the Timer
+     */
     public void start() {
         timer.scheduleAtFixedRate(this, 0, PERIOD); // 0 = start now
     }
@@ -71,6 +78,10 @@ public class RetrieveRunnerTimerTask extends TimerTask implements RetrieveRunner
         }
     }
 
+    /**
+     * Listener from RetrieveRunnersTask
+     * @param res
+     */
     @Override
     public void onRunnersRetrieved(List<RunnerModel> res) {
         for (RunnerModel r : res) {

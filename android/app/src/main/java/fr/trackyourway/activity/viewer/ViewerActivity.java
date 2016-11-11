@@ -29,6 +29,9 @@ import fr.trackyourway.model.RunnerWrap;
 
 import static fr.trackyourway.R.id.map;
 
+/**
+ * View : GoogleMap - Spinner (filter) - Button (reset the filter)
+ */
 public class ViewerActivity extends FragmentActivity implements OnMapReadyCallback, FilterBibDialog.FilterBibDialogListener, FilterTeamDialog.FilterTeamDialogListener {
     private static final String TAG = ViewerActivity.class.getSimpleName();
     private static final float ZOOM_INDEX = 16;
@@ -45,6 +48,7 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
+
 
         /**
          * Fill up the spinner
@@ -132,22 +136,36 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
         }
     }
 
+    /**
+     * Listener from the idBib Dialog
+     * Highlights a specific marker (by idBib)
+     *
+     * @param idBib
+     */
     @Override
     public void onIdBib(int idBib) {
         resetMarkers(null);
         RunnerWrap rw = retrieveRunnerTimerTask.getRunnerWrapMap().get(idBib);
 
+        // Highlight the marker
         if (rw != null) {
             Marker m = rw.getMarker();
             m.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
             LatLng marker = new LatLng(m.getPosition().latitude, m.getPosition().longitude);
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker, ZOOM_INDEX + 2), 1500, null);
-        } else {
+        }
+        // Runner not find
+        else {
             Toast.makeText(getApplicationContext(), "Can't find runner", Toast.LENGTH_LONG).show();
             resetMarkerAndZoom();
         }
     }
 
+    /**
+     * Listener from the List of team
+     * Highlights all the marker from a specific team
+     * @param teamName
+     */
     @Override
     public void onTeamClick(String teamName) {
         List<RunnerWrap> runners = new ArrayList<>(retrieveRunnerTimerTask.getRunnerWrapMap().values());

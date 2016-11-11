@@ -6,6 +6,8 @@ import android.widget.Spinner;
 
 /**
  * Created by bab on 25/10/16.
+ *
+ * Create a Spinner to select the filter (idBib or team)
  */
 
 public class FilterSpinner extends Spinner {

@@ -22,6 +22,9 @@
     <string name="bibFilter">Filtrer par dossard</string>
     <string name="cancel">Annuler</string>
     <string name="filter">Filtrer</string>
+    <string name="google_maps_key" translatable="false"></string>
+    <string name="id">Dossard</string>
+    <string name="team">Equipe</string>
 
 
 </resources>

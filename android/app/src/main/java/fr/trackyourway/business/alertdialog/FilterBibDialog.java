@@ -13,6 +13,9 @@ import fr.trackyourway.R;
 
 /**
  * Created by bab on 25/10/16.
+ * <p>
+ * Create a dialog window to select a specific idBib
+ * Expect the user to write (only) a number
  */
 
 public class FilterBibDialog extends DialogFragment {
@@ -24,7 +27,8 @@ public class FilterBibDialog extends DialogFragment {
         this.mListener = mListener;
     }
 
-    public FilterBibDialog() {    }
+    public FilterBibDialog() {
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

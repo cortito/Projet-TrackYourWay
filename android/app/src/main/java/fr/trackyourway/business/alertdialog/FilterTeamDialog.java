@@ -13,6 +13,9 @@ import fr.trackyourway.model.TeamModel;
 
 /**
  * Created by bab on 25/10/16.
+ *
+ * Create a list window to select a specific team
+ * Display all the team
  */
 
 public class FilterTeamDialog extends DialogFragment {
