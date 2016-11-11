@@ -2,7 +2,6 @@ package fr.trackyourway.activity.runner.Alert;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
@@ -10,9 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
 
 import fr.trackyourway.R;
 import fr.trackyourway.business.alertdialog.AlertDialog;
@@ -22,12 +18,13 @@ public class AlertActivity extends FragmentActivity implements AsyncSendingAlert
 
     private static final String TAG = AlertActivity.class.getSimpleName();
     private static final int REQUEST_CAPTURE = 1313;
-    ImageView resphoto;
-    private AsyncSendingAlertTask asyncSendingAlertTask;
-    GoogleApiClient mGoogleApiClient = null;
-    private Location mLastLocation = null;
-    LocationRequest locationRequest;
 
+    ImageView resphoto;
+
+    private AsyncSendingAlertTask asyncSendingAlertTask;
+
+    private double latitude;
+    private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +34,8 @@ public class AlertActivity extends FragmentActivity implements AsyncSendingAlert
         Button alertSendBtn = (Button) findViewById(R.id.sendAlertBtn);
 
         Bundle extras = getIntent().getExtras();
-        double latitude = extras.getDouble("latitude");
-        double longitude = extras.getDouble("longitude");
-
-        mLastLocation.setLatitude(latitude);
-        mLastLocation.setLongitude(longitude);
-
+        latitude = extras.getDouble("latitude");
+        longitude = extras.getDouble("longitude");
 
         alertSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +46,6 @@ public class AlertActivity extends FragmentActivity implements AsyncSendingAlert
             }
         });
     }
-
 
     @Override
     public void onTakingPhotoAlert() {
@@ -76,7 +68,7 @@ public class AlertActivity extends FragmentActivity implements AsyncSendingAlert
     public void onSendAlertMsg() {
         
         asyncSendingAlertTask = new AsyncSendingAlertTask(this);
-        asyncSendingAlertTask.execute(mLastLocation);
+        asyncSendingAlertTask.execute(latitude,longitude);
         Toast.makeText(this, "envoie de l'alerte au serveur", Toast.LENGTH_SHORT).show();
     }
 
