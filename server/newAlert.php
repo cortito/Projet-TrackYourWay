@@ -17,7 +17,7 @@
 
 	// on crée la requête SQL
 
-	$sql = 'INSERT INTO `Alert`(`alertType`, `idBib`, `latitude`, `longitude`) VALUES ('.$alertType.','.$idBib.','.$latitude.','.'longitude.')';
+	$sql = 'INSERT INTO `Alert`(`alertType`, `idBib`, `latitude`, `longitude`) VALUES ("'.$alertType.'",'.$idBib.','.$latitude.','.$longitude.')';
 
 	// on envoie la requête
 	$req = mysql_query($sql) or die('Erreur SQL !<br>'.$sql.'<br>'.mysql_error());
