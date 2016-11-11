@@ -19,13 +19,14 @@ import fr.trackyourway.R;
 
 public class AlertDialog extends DialogFragment {
 
+    private static final int REQUEST_CAPTURE = 1313;
+    ImageView resphoto;
     private AlertDialogListener mListener;
     private TextView dialogText;
     private CountDownTimer timer;
-    public AlertDialog (AlertDialogListener mListener) { this.mListener = mListener;}
-
-    private static final int REQUEST_CAPTURE = 1313;
-    ImageView resphoto;
+    public AlertDialog(AlertDialogListener mListener) {
+        this.mListener = mListener;
+    }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -39,36 +40,36 @@ public class AlertDialog extends DialogFragment {
 
         // Use the Builder class for convenient dialog construction
         final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
-
         builder.setView(viewInflater)
-                .setTitle("Envoie du message d'alerte")
-                .setPositiveButton("Take a picture", new DialogInterface.OnClickListener() {
+                .setTitle(getString(R.string.alertTitle))
+                .setPositiveButton(getString(R.string.TakepicBtn), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         timer.cancel();
                         mListener.onTakingPhotoAlert(viewInflater);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                         timer.cancel();
                     }
                 });
 
-         timer = new CountDownTimer(20000, 1000) {
+        timer = new CountDownTimer(20000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                dialogText.setText("Il vous reste " + millisUntilFinished / 1000 + " secondes pour annuler avant l'envoie de l'alerte à l'Admin.");
+                dialogText.setText((millisUntilFinished / 1000) + " " + getString(R.string.countdown));
             }
+
             public void onFinish() {
                 Log.d("tag", "on envoie la donnée");
-                if(getDialog() != null) {
+                if (getDialog() != null) {
                     getDialog().cancel();
                 }
                 mListener.onSendAlertMsg();
 
-             }
-                //TODO:envoi du message d'Alert
+            }
+            //TODO:envoi du message d'Alert
 
 
         }.start();
@@ -80,6 +81,7 @@ public class AlertDialog extends DialogFragment {
 
     public interface AlertDialogListener {
         void onTakingPhotoAlert(View v);
+
         void onSendAlertMsg();
     }
 }

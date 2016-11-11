@@ -27,7 +27,9 @@
     <string name="team">Equipe</string>
     <string name="TakepicBtn">Prendre une photo</string>
     <string name="alertBtnTxt">Envoyer Alerte</string>
-    <string name="titleAlert">Cliquer sur le bouton envoie alert si vous avez un problème.</string>
+    <string name="titleAlert">Cliquez sur le bouton envoie alert si vous avez un problème.</string>
+    <string name="alertTitle">Envoie du message d\'alerte</string>
+    <string name="countdown">secondes pour annuler avant l\'envoie de l\'alerte à l\'Admin.</string>
 
 
 </resources>
