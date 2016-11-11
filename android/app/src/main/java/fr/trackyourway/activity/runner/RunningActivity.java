@@ -21,6 +21,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import fr.trackyourway.MainActivity;
 import fr.trackyourway.R;
 import fr.trackyourway.activity.runner.Alert.AlertActivity;
 import fr.trackyourway.business.dao.AsyncSendingRunnerTask;
@@ -36,6 +37,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
 
 
     private Location mCurrentLocation = null;
+    Intent intent;
 
     //private AsyncSendingRunnerTask asyncSendingRunnerTask;
     private SendingRunnerTimerTask sendingRunnerTimerTask;
@@ -52,6 +54,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
 
         Button stopBtn = (Button) findViewById(R.id.stopRunBtn);
         Button alertBtn = (Button) findViewById(R.id.alertBtn);
+        intent = new Intent(RunningActivity.this, AlertActivity.class);
 
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +62,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
                 mGoogleApiClient.disconnect();
                 Log.d("tag", "going to stop");
                 if (!mGoogleApiClient.isConnected()) {
-                    Intent intent = new Intent(RunningActivity.this, RunnerActivity.class);
+                    intent = new Intent(RunningActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
             }
@@ -68,11 +71,12 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
         alertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mGoogleApiClient.disconnect();
                 Log.d("tag", "going to Alert");
-                if (!mGoogleApiClient.isConnected()) {
-                    Intent intent = new Intent(RunningActivity.this, AlertActivity.class);
-                    startActivity(intent);
+                if (mGoogleApiClient.isConnected()) {
+                    Intent  intentalert = new Intent(RunningActivity.this, AlertActivity.class);
+                    intentalert.putExtra("latitude",mCurrentLocation.getLatitude());
+                    intentalert.putExtra("longitude",mCurrentLocation.getLongitude());
+                    startActivity(intentalert);
                 }
             }
         });
@@ -90,7 +94,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
 
     }
 
-    protected void createLocationRequest(LocationRequest mLocationRequest) {
+    public static void createLocationRequest(LocationRequest mLocationRequest) {
         mLocationRequest.setInterval(UPDATE_RATE);
         mLocationRequest.setFastestInterval(UPDATE_RATE);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -120,19 +124,11 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION)
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA)
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             ActivityCompat.requestPermissions(RunningActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CAMERA},
                     MY_PERMISSION_REQUEST_READ_FINE_LOCATION);
@@ -140,7 +136,6 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
-
 
     }
 
@@ -154,7 +149,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(RunningActivity.this,
-                            "permission was granted, :)",
+                            "permission was granted",
                             Toast.LENGTH_LONG).show();
 
                     try{
@@ -167,7 +162,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
                     }
                 } else {
                     Toast.makeText(RunningActivity.this,
-                            "permission denied, ...:(",
+                            "permission denied, ...",
                             Toast.LENGTH_LONG).show();
                 }
 
@@ -199,6 +194,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
     public void onLocationChanged(Location location) {
 
         mCurrentLocation = location;
+
         sendingRunnerTimerTask = new SendingRunnerTimerTask(mCurrentLocation);
         sendingRunnerTimerTask.start();
 

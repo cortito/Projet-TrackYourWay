@@ -42,7 +42,6 @@ public class AsyncSendingAlertTask extends AsyncTask< Location, String, String> 
                     .url(url.toString())
                     .build();
             response = client.newCall(request).execute().body().string();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

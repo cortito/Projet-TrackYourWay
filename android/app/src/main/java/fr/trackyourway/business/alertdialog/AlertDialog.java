@@ -49,7 +49,8 @@ public class AlertDialog extends DialogFragment {
                 .setPositiveButton(getString(R.string.TakepicBtn), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         timer.cancel();
-                        mListener.onTakingPhotoAlert(viewInflater);
+                        mListener.onSendAlertMsg();
+                        mListener.onTakingPhotoAlert();
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -84,8 +85,7 @@ public class AlertDialog extends DialogFragment {
 
 
     public interface AlertDialogListener {
-        void onTakingPhotoAlert(View v);
-
+        void onTakingPhotoAlert();
         void onSendAlertMsg();
     }
 }
