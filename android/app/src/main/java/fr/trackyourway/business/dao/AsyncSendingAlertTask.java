@@ -1,6 +1,5 @@
 package fr.trackyourway.business.dao;
 
-import android.location.Location;
 import android.os.AsyncTask;
 
 import okhttp3.OkHttpClient;
@@ -10,9 +9,9 @@ import okhttp3.Request;
  * Created by corto_000 on 27/10/2016.
  */
 
-public class AsyncSendingAlertTask extends AsyncTask< Location, String, String> {
+public class AsyncSendingAlertTask extends AsyncTask< Double, String, String> {
 
-    private static final String URL_POST = "http://bab-laboratory.com/TrackYourWay/updateLocation.php";
+    private static final String URL_POST = "http://bab-laboratory.com/TrackYourWay/newAlert.php";
 
     private final SendingAlertListener sendingAlertListener;
     private OkHttpClient client;
@@ -22,9 +21,8 @@ public class AsyncSendingAlertTask extends AsyncTask< Location, String, String> 
         this.sendingAlertListener = callback;
     }
 
-
     @Override
-    protected String doInBackground( Location... params) {
+    protected String doInBackground( Double... params) {
         client = new OkHttpClient().newBuilder().build();
         String response = "";
         String typeA="INJURED";
@@ -34,9 +32,9 @@ public class AsyncSendingAlertTask extends AsyncTask< Location, String, String> 
                 .append("&idBib=")
                 .append(0)
                 .append("&latitude=")
-                .append(params[0].getLatitude())
+                .append(params[0].toString())
                 .append("&longitude=")
-                .append(params[0].getLongitude());
+                .append(params[1].toString());
         try {
             Request request = new Request.Builder()
                     .url(url.toString())
@@ -56,8 +54,6 @@ public class AsyncSendingAlertTask extends AsyncTask< Location, String, String> 
         super.onPostExecute(o);
         sendingAlertListener.onSendingAlert(o);
     }
-
-
 
 
     public interface SendingAlertListener {

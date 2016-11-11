@@ -8,7 +8,6 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import fr.trackyourway.R;
@@ -19,8 +18,6 @@ import fr.trackyourway.R;
 
 public class AlertDialog extends DialogFragment {
 
-    private static final int REQUEST_CAPTURE = 1313;
-    ImageView resphoto;
     private AlertDialogListener mListener;
     private TextView dialogText;
     private CountDownTimer timer;
@@ -74,11 +71,9 @@ public class AlertDialog extends DialogFragment {
                 mListener.onSendAlertMsg();
 
             }
-            //TODO:envoi du message d'Alert
 
 
         }.start();
-
 
         return builder.create();
     }

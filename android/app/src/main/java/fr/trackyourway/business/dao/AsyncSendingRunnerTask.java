@@ -54,8 +54,6 @@ public class AsyncSendingRunnerTask extends AsyncTask<Location, String, String> 
     }
 
 
-
-
     public interface RunnerSendListener {
         void onRunnerRunning(String o);
     }

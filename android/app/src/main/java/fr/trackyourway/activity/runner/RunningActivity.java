@@ -26,7 +26,6 @@ import fr.trackyourway.R;
 import fr.trackyourway.activity.runner.Alert.AlertActivity;
 import fr.trackyourway.business.dao.AsyncSendingRunnerTask;
 import fr.trackyourway.business.services.SendingRunnerTimerTask;
-import okhttp3.OkHttpClient;
 
 public class RunningActivity extends AppCompatActivity implements ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, AsyncSendingRunnerTask.RunnerSendListener {
 
@@ -39,13 +38,9 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
     private Location mCurrentLocation = null;
     Intent intent;
 
-    //private AsyncSendingRunnerTask asyncSendingRunnerTask;
     private SendingRunnerTimerTask sendingRunnerTimerTask;
     LocationRequest locationRequest;
 
-    //String mLastUpdateTime = null;
-
-    OkHttpClient client = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
