@@ -11,14 +11,12 @@ import android.widget.ImageView;
 
 import fr.trackyourway.R;
 import fr.trackyourway.business.alertdialog.AlertDialog;
-import fr.trackyourway.business.dao.AsyncSendingAlertTask;
 
 public class AlertActivity extends FragmentActivity implements AlertDialog.AlertDialogListener {
 
     private static final String TAG = AlertActivity.class.getSimpleName();
     private static final int REQUEST_CAPTURE = 1313;
     ImageView resphoto;
-    private AsyncSendingAlertTask asyncSendingAlertTask;
 
 
     @Override
@@ -32,7 +30,8 @@ public class AlertActivity extends FragmentActivity implements AlertDialog.Alert
         alertSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog alertDialog = new AlertDialog(AlertActivity.this);
+                AlertDialog alertDialog = new AlertDialog();
+                alertDialog.setmListener(AlertActivity.this);
                 alertDialog.show(getFragmentManager(),TAG);
 
             }

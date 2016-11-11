@@ -71,11 +71,15 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
                         resetMarkerAndZoom();
                         break;
                     case 1:
-                        FilterBibDialog alertDialog = new FilterBibDialog(ViewerActivity.this);
+                        FilterBibDialog alertDialog = new FilterBibDialog();
+                        alertDialog.setmListener(ViewerActivity.this);
+
                         alertDialog.show(getFragmentManager(), TAG);
                         break;
                     case 2:
-                        FilterTeamDialog teamDialog = new FilterTeamDialog(ViewerActivity.this, retrieveRunnerTimerTask.getTeamMap());
+                        FilterTeamDialog teamDialog = new FilterTeamDialog();
+                        teamDialog.setmListener(ViewerActivity.this);
+                        teamDialog.setTeamMap(retrieveRunnerTimerTask.getTeamMap());
                         teamDialog.show(getFragmentManager(), TAG);
                         break;
                 }
@@ -164,6 +168,7 @@ public class ViewerActivity extends FragmentActivity implements OnMapReadyCallba
     /**
      * Listener from the List of team
      * Highlights all the marker from a specific team
+     *
      * @param teamName
      */
     @Override

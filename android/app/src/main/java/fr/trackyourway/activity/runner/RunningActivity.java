@@ -102,6 +102,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
         super.onStart();
     }
 
+    @Override
     protected void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
@@ -181,7 +182,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
         if(sendingRunnerTimerTask != null){
             sendingRunnerTimerTask.onPause();
         }
-        
+
     }
 
     @Override

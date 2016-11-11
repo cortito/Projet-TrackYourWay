@@ -23,12 +23,10 @@ public class FilterBibDialog extends DialogFragment {
 
     private FilterBibDialogListener mListener;
 
-    public FilterBibDialog(FilterBibDialogListener mListener) {
+    public void setmListener(FilterBibDialogListener mListener) {
         this.mListener = mListener;
     }
 
-    public FilterBibDialog() {
-    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

@@ -21,12 +21,13 @@ import fr.trackyourway.model.TeamModel;
 public class FilterTeamDialog extends DialogFragment {
 
     private FilterTeamDialogListener mListener;
-    private final Map<String, TeamModel> teamMap;
+    private Map<String, TeamModel> teamMap;
 
-
-
-    public FilterTeamDialog(FilterTeamDialogListener mListener, Map<String, TeamModel> teamMap) {
+    public void setmListener(FilterTeamDialogListener mListener) {
         this.mListener = mListener;
+    }
+
+    public void setTeamMap(Map<String, TeamModel> teamMap) {
         this.teamMap = teamMap;
     }
 

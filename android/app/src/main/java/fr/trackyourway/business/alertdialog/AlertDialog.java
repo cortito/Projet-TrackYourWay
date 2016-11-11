@@ -24,7 +24,11 @@ public class AlertDialog extends DialogFragment {
     private AlertDialogListener mListener;
     private TextView dialogText;
     private CountDownTimer timer;
-    public AlertDialog(AlertDialogListener mListener) {
+
+    public AlertDialog() {    }
+
+
+    public void setmListener(AlertDialogListener mListener) {
         this.mListener = mListener;
     }
 
