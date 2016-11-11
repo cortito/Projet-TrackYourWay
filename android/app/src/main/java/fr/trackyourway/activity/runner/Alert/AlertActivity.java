@@ -16,6 +16,7 @@ import com.google.android.gms.location.LocationRequest;
 
 import fr.trackyourway.R;
 import fr.trackyourway.business.alertdialog.AlertDialog;
+import fr.trackyourway.business.dao.AsyncSendingAlertTask;
 
 public class AlertActivity extends FragmentActivity implements AsyncSendingAlertTask.SendingAlertListener, AlertDialog.AlertDialogListener {
 
@@ -35,10 +36,12 @@ public class AlertActivity extends FragmentActivity implements AsyncSendingAlert
 
         Button alertSendBtn = (Button) findViewById(R.id.sendAlertBtn);
 
-        //Bundle bundle = this.getIntent().getExtras();
-        //mLastLocation.setLatitude(this.getIntent().getExtras().getDouble("latitude"));
-        //mLastLocation.setLatitude(bundle.);
-        //mLastLocation.setLongitude(bundle.getDouble("longitude"));
+        Bundle extras = getIntent().getExtras();
+        double latitude = extras.getDouble("latitude");
+        double longitude = extras.getDouble("longitude");
+        
+        mLastLocation.setLatitude(latitude);
+        mLastLocation.setLongitude(longitude);
 
 
         alertSendBtn.setOnClickListener(new View.OnClickListener() {
