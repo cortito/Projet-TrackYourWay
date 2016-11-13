@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -58,7 +57,6 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
             @Override
             public void onClick(View v) {
                 mGoogleApiClient.disconnect();
-                Log.d("tag", "going to stop");
                 if (!mGoogleApiClient.isConnected()) {
                     intent = new Intent(RunningActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -69,7 +67,6 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
         alertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("tag", "going to Alert");
                 if (mGoogleApiClient.isConnected()) {
                     if (mCurrentLocation != null) {
                         Intent intentalert = new Intent(RunningActivity.this, AlertActivity.class);

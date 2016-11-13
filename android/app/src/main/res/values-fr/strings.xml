@@ -4,7 +4,7 @@
     <string name="title">Track Your Way</string>
     <string name="userBtn">Coureur</string>
     <string name="viewerBtn">Spectateur</string>
-    <string name="titleRunner">Bienvenu Coureur</string>
+    <string name="titleRunner">Bienvenue Coureur</string>
     <string name="startBtn">Commencer la course</string>
     <string name="runTitle">La course est en cours...</string>
     <string name="stopBtn">Arrêter la course</string>
