@@ -33,14 +33,17 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
     public final static int UPDATE_RATE = 5000;
     public final static int MY_PERMISSION_REQUEST_READ_FINE_LOCATION = 111;
     GoogleApiClient mGoogleApiClient = null;
-
-
-    private Location mCurrentLocation = null;
     Intent intent;
-
-    private SendingRunnerTimerTask sendingRunnerTimerTask;
     LocationRequest locationRequest;
+    private Location mCurrentLocation = null;
+    private SendingRunnerTimerTask sendingRunnerTimerTask;
 
+    public static void createLocationRequest(LocationRequest mLocationRequest) {
+        mLocationRequest.setInterval(UPDATE_RATE);
+        mLocationRequest.setFastestInterval(UPDATE_RATE);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +71,14 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
             public void onClick(View v) {
                 Log.d("tag", "going to Alert");
                 if (mGoogleApiClient.isConnected()) {
-                    Intent  intentalert = new Intent(RunningActivity.this, AlertActivity.class);
-                    intentalert.putExtra("latitude",mCurrentLocation.getLatitude());
-                    intentalert.putExtra("longitude",mCurrentLocation.getLongitude());
-                    startActivity(intentalert);
+                    if (mCurrentLocation != null) {
+                        Intent intentalert = new Intent(RunningActivity.this, AlertActivity.class);
+                        intentalert.putExtra("latitude", mCurrentLocation.getLatitude());
+                        intentalert.putExtra("longitude", mCurrentLocation.getLongitude());
+                        startActivity(intentalert);
+                    } else {
+                        Toast.makeText(RunningActivity.this, "No location", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
@@ -86,13 +93,6 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
         locationRequest = new LocationRequest();
         createLocationRequest(locationRequest);
 
-
-    }
-
-    public static void createLocationRequest(LocationRequest mLocationRequest) {
-        mLocationRequest.setInterval(UPDATE_RATE);
-        mLocationRequest.setFastestInterval(UPDATE_RATE);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
     }
 
@@ -111,12 +111,6 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
-        Toast.makeText(RunningActivity.this,
-                "attempt connection, :)",
-                Toast.LENGTH_LONG).show();
-
-
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -125,7 +119,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
                 != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(RunningActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CAMERA},
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CAMERA},
                     MY_PERMISSION_REQUEST_READ_FINE_LOCATION);
 
             return;
@@ -147,10 +141,10 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
                             "permission was granted",
                             Toast.LENGTH_LONG).show();
 
-                    try{
+                    try {
                         LocationServices.FusedLocationApi.requestLocationUpdates(
                                 mGoogleApiClient, locationRequest, this);
-                    }catch(SecurityException e){
+                    } catch (SecurityException e) {
                         Toast.makeText(RunningActivity.this,
                                 "SecurityException:\n" + e.toString(),
                                 Toast.LENGTH_LONG).show();
@@ -169,7 +163,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
     @Override
     protected void onPause() {
         super.onPause();
-        if(sendingRunnerTimerTask != null){
+        if (sendingRunnerTimerTask != null) {
             sendingRunnerTimerTask.onPause();
         }
 
@@ -196,6 +190,7 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
         Toast.makeText(this, "Location sent...", Toast.LENGTH_SHORT).show();
 
     }
+
     @Override
     public void onRunnerRunning(String o) {
 
