@@ -102,6 +102,9 @@ public class RunningActivity extends AppCompatActivity implements ConnectionCall
     protected void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
+        if (sendingRunnerTimerTask != null) {
+            sendingRunnerTimerTask.onPause();
+        }
     }
 
 
